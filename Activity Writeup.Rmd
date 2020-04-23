@@ -1,0 +1,42 @@
+---
+title: "Reproducible Research Project 1"
+---
+## Activity Data Writeup
+
+In this project we have data from 1 activity monitoring device from one anonymous person. We will be looking at their steps taken per day and month over the months of October and November 2012.
+
+First we will read in our data set and remove NA values. In addition, I am 
+going to reformat the date column into POSIX format.
+
+```{r setup, results = 'hide'}
+data <- read.csv("activity.csv")
+cleandata <- data[!is.na(data$steps),]
+cleandata$date <- as.POSIXct(cleandata$date, format="%Y-%m-%d")
+```
+
+A histogram of the total number of steps taken each day. 
+```{r histogram}
+perday <- aggregate(cleandata$steps, by=list(cleandata$date), FUN=sum)
+colnames(perday) <- c("date","steps")
+hist(c(perday$steps,perday$date), main = "Count of Steps per Day", 
+     xlab = "Steps Taken", ylab = "Number of Days Recorded")
+```
+
+Next I have determined the mean and median of the number of steps taken per day.
+```{r mean and median}
+mean(perday$steps, na.rm = TRUE)
+median(perday$steps, na.rm = TRUE)
+```
+
+Here I have made a time series plot of the average number of steps taken over
+the 5 minute intervals that data was collected throughout the day.
+```{r timeseries}
+intervals <- tapply(cleandata$steps, cleandata$interval, mean)
+plot(as.numeric(names(intervals)), intervals, type = "l")
+```
+
+Now I will find the 5 minute interval that our particpant took the most steps
+throughout the day. 
+```{r max interval}
+
+```
