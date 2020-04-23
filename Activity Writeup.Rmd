@@ -44,3 +44,13 @@ maxsteps <- sort(avginterval$`cleandata$steps`, decreasing = TRUE)
 print(avginterval[avginterval$`cleandata$steps` == maxsteps[1],])
 ```
 
+I will now look for the number of missing values in the raw data set. 
+```{r imputting}
+nrow(data[is.na(data$steps),])
+```
+
+To makeup for the missing values, I am going to replace each missing value, 
+with the mean value for that time period. 
+```{r}
+
+```
