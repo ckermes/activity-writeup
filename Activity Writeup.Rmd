@@ -19,7 +19,8 @@ A histogram of the total number of steps taken each day.
 perday <- aggregate(cleandata$steps, by=list(cleandata$date), FUN=sum)
 colnames(perday) <- c("date","steps")
 hist(c(perday$steps,perday$date), main = "Count of Steps per Day", 
-     xlab = "Steps Taken", ylab = "Number of Days Recorded")
+     xlab = "Steps Taken", ylab = "Number of Days Recorded",
+     breaks = 5)
 ```
 
 Next I have determined the mean and median of the number of steps taken per day.
@@ -38,5 +39,8 @@ plot(as.numeric(names(intervals)), intervals, type = "l")
 Now I will find the 5 minute interval that our particpant took the most steps
 throughout the day. 
 ```{r max interval}
-
+avginterval <- aggregate(cleandata$steps ~ cleandata$interval, FUN = sum)
+maxsteps <- sort(avginterval$`cleandata$steps`, decreasing = TRUE)
+print(avginterval[avginterval$`cleandata$steps` == maxsteps[1],])
 ```
+
